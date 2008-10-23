@@ -43,8 +43,10 @@ o  hetcor() uses the nearcor() function in sfsmisc to insure that the correlatio
 o  small changes.
 
 
-version 0.705
+version 0.7-5
 
 o  polychor() and polyserial() now return NA and report a warning when a factor is invariant (after problem report by Jose Quesada); in polychor(), empty factor levels are automatically removed.
 
+version 0.7-6
 
+o  polyserial() and polychor() now make sure that final correlations are in the range [-1, 1], reporting a warning when inadmissible values are coerced to -1 or 1 (correcting a problem reported by Marie Loh).
