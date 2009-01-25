@@ -50,3 +50,7 @@ o  polychor() and polyserial() now return NA and report a warning when a factor 
 version 0.7-6
 
 o  polyserial() and polychor() now make sure that final correlations are in the range [-1, 1], reporting a warning when inadmissible values are coerced to -1 or 1 (correcting a problem reported by Marie Loh).
+
+version 0.7-7
+
+o  hetcor() avoids an incorrect name for the first variable when it's given a matrix as input, rather than a data frame or individual variables, as the documentation indicates (preventing a consequent renaming error reported by Iuri Gavronski).
