@@ -54,3 +54,5 @@ o  polyserial() and polychor() now make sure that final correlations are in the 
 version 0.7-7
 
 o  hetcor() avoids an incorrect name for the first variable when it's given a matrix as input, rather than a data frame or individual variables, as the documentation indicates (preventing a consequent renaming error reported by Iuri Gavronski).
+
+o  Small fix to hetcor.Rd.

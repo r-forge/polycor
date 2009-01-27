@@ -45,7 +45,7 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE, bins=4, pd=TRUE)
   \item{type}{the type of each correlation: \code{"Pearson"}, \code{"Polychoric"}, or \code{"Polyserial"}.}
   \item{std.errors}{the standard errors of the correlations, if requested.}
   \item{n}{the number (or numbers) of observations on which the correlations are based.}
-  \items{tests}{p-values for tests of bivariate normality for each pair of variables.}
+  \item{tests}{p-values for tests of bivariate normality for each pair of variables.}
   \item{NA.method}{the method by which any missing data were handled: \code{"complete.obs"} 
     or \code{"pairwise.complete.obs"}.}
   \item{ML}{\code{TRUE} for ML estimates, \code{FALSE} for two-step estimates.}

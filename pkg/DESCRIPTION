@@ -1,6 +1,6 @@
 Package: polycor
 Title: Polychoric and Polyserial Correlations
-Date: 2009/01/25
+Date: 2009/01/26
 Version: 0.7-7
 Depends: R (>= 1.9.0), mvtnorm, sfsmisc
 Author: John Fox
