@@ -1,4 +1,4 @@
-# last modified 05 Dec 07 by J. Fox
+# last modified 25 March 2010 by J. Fox
 
 "hetcor.data.frame" <-
 function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.obs"),
@@ -35,7 +35,7 @@ function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.
            Test[i, j] <- pchisq(chisq(x, y, r, bins=bins), bins^2 - 2, lower.tail=FALSE)
            }
          }
-      else if (inherits(x, "factor") && inherits(y, "factor")) {
+      else if (inherits(x, c("factor", "logical")) && inherits(y, c("factor", "logical"))) {
          Type[i, j] <- Type[j, i] <- "Polychoric"
          result <- polychor(x, y, ML=ML, std.err=std.err)
          if (std.err){
@@ -50,12 +50,12 @@ function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.
          else R[i, j] <- R[j, i] <- result
          }
        else {
-         if (inherits(x, "factor") && inherits(y, c("numeric", "integer")))
+         if (inherits(x, c("factor", "logical")) && inherits(y, c("numeric", "integer")))
            result <- polyserial(y, x, ML=ML, std.err=std.err, bins=bins)
-         else if (inherits(x, c("numeric", "integer")) && inherits(y, "factor"))
+         else if (inherits(x, c("numeric", "integer")) && inherits(y, c("factor", "logical")))
            result <- polyserial(x, y, ML=ML, std.err=std.err, bins=bins)
          else {
-             stop("columns must be numeric or factors.")
+             stop("columns must be numeric, logical, or factors.")
              }
          Type[i, j] <- Type[j, i] <- "Polyserial"
          if (std.err){

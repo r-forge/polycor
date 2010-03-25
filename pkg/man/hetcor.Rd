@@ -22,7 +22,8 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE, bins=4, pd=TRUE)
 }
 
 \arguments{
-  \item{data}{a data frame consisting of factors and/or numeric variables, or the first of several variables.}
+  \item{data}{a data frame consisting of factors, ordered factors, logical variables, 
+  	and/or numeric variables, or the first of several variables.}
   \item{\dots}{variables and/or arguments to be passed down.}
   \item{ML}{if \code{TRUE}, compute maximum-likelihood estimates;
     if \code{FALSE}, compute quick two-step estimates.}
