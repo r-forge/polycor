@@ -1,6 +1,6 @@
-# last modified 21 Oct 08 by J. Fox
+# last modified 2012-07-22 by J. Fox
 
-"polychor" <-
+polychor <-
 	function (x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999){
 	f <- function(pars) {
 		if (length(pars) == 1){
@@ -46,12 +46,12 @@
 		result <- optim(c(optimise(f, interval=c(-1, 1))$minimum, rc, cc), f,
 			control=control, hessian=std.err)
 		if (result$par[1] > 1){
-			result$par[1] <- 1
-			warning("inadmissible correlation set to 1")
+			result$par[1] <- maxcor
+			warning(paste("inadmissible correlation set to", maxcor))
 		}
 		else if (result$par[1] < -1){
-			result$par[1] <- -1
-			warning("inadmissible correlation set to -1")
+			result$par[1] <- -maxcor
+			warning(paste("inadmissible correlation set to -", maxcor, sep=""))
 		}
 		if (std.err) {
 			chisq <- 2*(result$value + sum(tab * log((tab + 1e-6)/n)))
@@ -73,12 +73,12 @@
 	else if (std.err){
 		result <- optim(0, f, control=control, hessian=TRUE, method="BFGS")
 		if (result$par > 1){
-			result$par <- 1
-			warning("inadmissible correlation set to 1")
+			result$par <- maxcor
+			warning(paste("inadmissible correlation set to", maxcor))
 		}
 		else if (result$par < -1){
-			result$par <- -1
-			warning("inadmissible correlation set to -1")
+			result$par <- -maxcor
+			warning(paste("inadmissible correlation set to -", maxcor, sep=""))
 		}
 		chisq <- 2*(result$value + sum(tab *log((tab + 1e-6)/n)))
 		df <- length(tab) - r - c 
@@ -92,5 +92,5 @@
 		class(result) <- "polycor"
 		return(result)
 	}
-	else optimise(f, interval=c(-1, 1))$minimum
+	else optimise(f, interval=c(-maxcor, maxcor))$minimum
 }

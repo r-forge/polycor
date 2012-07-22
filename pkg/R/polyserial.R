@@ -1,6 +1,6 @@
-# last modified 21 Oct 08 by J. Fox
+# last modified 2012-07-22 by J. Fox
 
-"polyserial" <-
+polyserial <-
 	function(x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999, bins=4){
 	f <- function(pars){
 		rho <- pars[1]
@@ -31,15 +31,19 @@
 	cuts <- qnorm(cumsum(tab)/n)[-s]
 	y <- as.numeric(as.factor(y))
 	rho <- sqrt((n - 1)/n)*sd(y)*cor(x, y)/sum(dnorm(cuts))
+  if (abs(rho) > maxcor) {
+    warning("initial correlation inadmissible, ", rho, ", set to ", sign(rho)*maxcor)
+    rho <- sign(rho)*maxcor
+  }
 	if (ML) {
 		result <- optim(c(rho, cuts), f, control=control, hessian=std.err)
 		if (result$par[1] > 1){
-			result$par[1] <- 1
-			warning("inadmissible correlation set to 1")
+			result$par[1] <- maxcor
+			warning(paste("inadmissible correlation set to", maxcor))
 		}
 		else if (result$par[1] < -1){
-			result$par[1] <- -1
-			warning("inadmissible correlation set to -1")
+			result$par[1] <- -maxcor
+			warning(paste("inadmissible correlation set to -", maxcor, sep=""))
 		}
 		if (std.err){
 			chisq <- chisq(y, z, result$par[1], result$par[-1], bins=bins)
@@ -60,12 +64,12 @@
 	else if (std.err){
 		result <- optim(rho, f, control=control, hessian=TRUE, method="BFGS")
 		if (result$par > 1){
-			result$par <- 1
-			warning("inadmissible correlation set to 1")
+			result$par <- maxcor
+			warning(paste("inadmissible correlation set to", maxcor))
 		}
 		else if (result$par < -1){
-			result$par <- -1
-			warning("inadmissible correlation set to -1")
+			result$par <- -maxcor
+			warning(paste("inadmissible correlation set to -", maxcor, sep=""))
 		}
 		chisq <- chisq(y, z, rho, cuts, bins=bins)
 		df <- s*bins - s  - 1
@@ -79,15 +83,5 @@
 		class(result) <- "polycor"
 		return(result)
 	}
-	else {
-		if (rho > 1){
-			rho <- 1
-			warning("inadmissible correlation set to 1")
-		}
-		else if (rho < -1){
-			rho <- -1
-			warning("inadmissible correlation set to -1")
-		}
-		rho
-	}
+  else return(rho)
 }
