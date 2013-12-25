@@ -7,7 +7,7 @@ polyserial <-
 		if (abs(rho) > maxcor) rho <- sign(rho)*maxcor
 		cts <- if (length(pars) == 1) c(-Inf, cuts, Inf)
 			else c(-Inf, pars[-1], Inf)
-        if (any(diff(cts) < 0)) stop("computed thresholds out of order")
+        if (any(diff(cts) < 0)) return(Inf)
 		tau <- (matrix(cts, n, s+1, byrow=TRUE) - matrix(rho*z, n, s+1))/
 			sqrt(1 - rho^2)
 		- sum(log(dnorm(z)*(pnorm(tau[cbind(indices, y+1)]) - pnorm(tau[cbind(indices, y)]))))
