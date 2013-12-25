@@ -65,3 +65,4 @@ version 0.7-9
 
 o  Further protection/warnings against inadmissible correlations.
 
+o  Throw error when threhsolds are out of order (adapting suggestion of Evgeny Mirkes).

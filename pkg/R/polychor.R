@@ -1,4 +1,4 @@
-# last modified 2012-07-22 by J. Fox
+# last modified 2013-12-25 by J. Fox
 
 polychor <-
 	function (x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999){
@@ -14,6 +14,8 @@ polychor <-
 			if (abs(rho) > maxcor) rho <- sign(rho)*maxcor
 			row.cuts <- pars[2:r]
 			col.cuts <- pars[(r+1):(r+c-1)]
+            if (any(diff(row.cuts) < 0)) stop("computed row thresholds out of order")
+			if (any(diff(col.cuts) < 0)) stop("computed column thresholds out of order")
 		}
 		P <- binBvn(rho, row.cuts, col.cuts)
 		- sum(tab * log(P))

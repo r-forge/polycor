@@ -1,4 +1,4 @@
-# last modified 2012-07-22 by J. Fox
+# last modified 2013-12-25 by J. Fox
 
 polyserial <-
 	function(x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999, bins=4){
@@ -7,6 +7,7 @@ polyserial <-
 		if (abs(rho) > maxcor) rho <- sign(rho)*maxcor
 		cts <- if (length(pars) == 1) c(-Inf, cuts, Inf)
 			else c(-Inf, pars[-1], Inf)
+        if (any(diff(cts) < 0)) stop("computed thresholds out of order")
 		tau <- (matrix(cts, n, s+1, byrow=TRUE) - matrix(rho*z, n, s+1))/
 			sqrt(1 - rho^2)
 		- sum(log(dnorm(z)*(pnorm(tau[cbind(indices, y+1)]) - pnorm(tau[cbind(indices, y)]))))
