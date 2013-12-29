@@ -66,3 +66,6 @@ version 0.7-9
 o  Further protection/warnings against inadmissible correlations.
 
 o  Protect against out-of-order thresholds during optimization (suggestion of Evgeny Mirkes).
+
+o  hetcor() doesn't die when an error is thrown computing a correlation, which is now set to NA.
+
