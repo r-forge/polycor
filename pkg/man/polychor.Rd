@@ -42,6 +42,20 @@ polychor(x, y, ML = FALSE, control = list(), std.err = FALSE, maxcor=.9999)
   Othewise, returns the polychoric correlation.
 }
 
+\details{
+  The ML estimator is computed by maximizing the bivariate-normal likelihood with respect to the 
+  thresholds for the two variables (\eqn{\tau^{x}_i, i = 1,\ldots, r - 1}{\tau^x[i], i = 1,\ldots, r - 1}; 
+  \eqn{\tau^{y}_j, j = 1,\ldots, c - 1}{\tau^y[j], j = 1,\ldots, c - 1}) and
+  the population correlation (\eqn{\rho}). Here, \eqn{r} and \eqn{c} are respectively the number of levels
+  of \eqn{x} and \eqn{y}. The likelihood is maximized numerically using the \code{\link{optim}} function,
+  and the covariance matrix of the estimated parameters is based on the numerical Hessian computed by \code{optim}.
+  
+  The two-step estimator is computed by first estimating the thresholds (\eqn{\tau^{x}_i, i = 1,\ldots, r - 1}{\tau^x[i], i = 1,\ldots, r - 1} 
+  and \eqn{\tau^{y}_j, i = j,\ldots, c - 1}{\tau^y[j], i = j,\ldots, c - 1}) separately from the marginal distribution of each variable. Then the 
+  one-dimensional likelihood for \eqn{\rho} is maximized numerically, using \code{\link{optim}} if standard errors are
+  requested, or \code{\link{optimise}} if they are not. The standard error computed treats the thresholds as fixed.
+}
+
 \references{
     Drasgow, F. (1986) 
     Polychoric and polyserial correlations. 
@@ -65,18 +79,14 @@ if(require(mvtnorm)){
     x <- data[,1]
     y <- data[,2]
     cor(x, y)  # sample correlation
+    }
+if(require(mvtnorm)){
     x <- cut(x, c(-Inf, .75, Inf))
     y <- cut(y, c(-Inf, -1, .5, 1.5, Inf))
     polychor(x, y)  # 2-step estimate
     }
 if(require(mvtnorm)){
     set.seed(12345)
-    data <- rmvnorm(1000, c(0, 0), matrix(c(1, .5, .5, 1), 2, 2))
-    x <- data[,1]
-    y <- data[,2]
-    cor(x, y)  # sample correlation
-    x <- cut(x, c(-Inf, .75, Inf))
-    y <- cut(y, c(-Inf, -1, .5, 1.5, Inf))
     polychor(x, y, ML=TRUE, std.err=TRUE)  # ML estimate
     }
 }

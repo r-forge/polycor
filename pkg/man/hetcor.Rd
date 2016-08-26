@@ -93,6 +93,8 @@ if(require(mvtnorm)){
     round(R, 4)  # population correlations
     data <- rmvnorm(1000, rep(0, 4), R)
     round(cor(data), 4)   # sample correlations
+    }
+if(require(mvtnorm)){
     x1 <- data[,1]
     x2 <- data[,2]
     y1 <- cut(data[,3], c(-Inf, .75, Inf))

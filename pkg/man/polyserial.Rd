@@ -44,6 +44,20 @@ polyserial(x, y, ML = FALSE, control = list(), std.err = FALSE, maxcor=.9999, bi
   Othewise, returns the polyserial correlation.
 }
 
+\details{
+  The ML estimator is computed by maximizing the bivariate-normal likelihood with respect to the 
+  thresholds for \eqn{y} (\eqn{\tau^{y}_j, i = 1,\ldots, c - 1}{\tau^y[j], j = 1,\ldots, c - 1}) and
+  the population correlation (\eqn{\rho}). The likelihood is maximized numerically using the \code{\link{optim}} function,
+  and the covariance matrix of the estimated parameters is based on the numerical Hessian computed by \code{optim}.
+  
+  The two-step estimator is computed by first estimating the thresholds 
+  (\eqn{\tau^{y}_j, i = 1,\ldots, c - 1}{\tau^y[j], j = 1,\ldots, c - 1})
+  from the marginal distribution of \eqn{y}. Then if the standard error of \eqn{\hat{\rho}}{\rho hat} is requested, the 
+  one-dimensional likelihood for \eqn{\rho} is maximized numerically, using \code{\link{optim}} if standard errors are
+  requested; the standard error computed treats the thresholds as fixed. If the standard error isn't request,
+  \eqn{\hat{\rho}}{\rho hat} is computed directly. 
+}
+
 \references{
     Drasgow, F. (1986) 
     Polychoric and polyserial correlations. 
@@ -63,6 +77,8 @@ if(require(mvtnorm)){
     x <- data[,1]
     y <- data[,2]
     cor(x, y)  # sample correlation
+    }
+if(require(mvtnorm)){
     y <- cut(y, c(-Inf, -1, .5, 1.5, Inf))
     polyserial(x, y)  # 2-step estimate
     }
