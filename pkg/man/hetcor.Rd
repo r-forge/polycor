@@ -31,8 +31,8 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE, bins=4, pd=TRUE)
   \item{bins}{number of bins to use for continuous variables in testing bivariate normality; the default is 4.}
   \item{pd}{if \code{TRUE} and if the correlation matrix is not positive-definite,
     an attempt will be made to adjust it to a
-    positive-definite matrix, using the \code{\link[sfsmisc]{nearcor}} function in the \code{sfsmisc} package.
-    Note that default arguments to \code{nearcor} are used; for more control call \code{nearcor} directly.}
+    positive-definite matrix, using the \code{\link[Matrix]{nearPD}} function in the \code{Matrix} package.
+    Note that default arguments to \code{nearPD} are used (except \code{corr=TRUE}); for more control call \code{nearPD} directly.}
   \item{use}{if \code{"complete.obs"}, remove observations with any missing data; 
     if \code{"pairwise.complete.obs"}, compute each correlation using all observations with
     valid data for that pair of variables.}
@@ -81,24 +81,28 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE, bins=4, pd=TRUE)
     \emph{Annals of Mathematical Statistics} \bold{29}, 201-211.
 }
 
-\seealso{\code{\link{polychor}}, \code{\link{polyserial}}, \code{\link[sfsmisc]{nearcor}}}
+\seealso{\code{\link{polychor}}, \code{\link{polyserial}}, \code{\link[Matrix]{nearPD}}}
 
 \examples{
-set.seed(12345)
-R <- matrix(0, 4, 4)
-R[upper.tri(R)] <- runif(6)
-diag(R) <- 1
-R <- cov2cor(t(R) \%*\% R)
-round(R, 4)  # population correlations
-data <- rmvnorm(1000, rep(0, 4), R)
-round(cor(data), 4)   # sample correlations
-x1 <- data[,1]
-x2 <- data[,2]
-y1 <- cut(data[,3], c(-Inf, .75, Inf))
-y2 <- cut(data[,4], c(-Inf, -1, .5, 1.5, Inf))
-data <- data.frame(x1, x2, y1, y2)
-hetcor(data)  # Pearson, polychoric, and polyserial correlations, 2-step est.
-hetcor(x1, x2, y1, y2, ML=TRUE) # Pearson, polychoric, polyserial correlations, ML est.
+if(require(mvtnorm)){
+    set.seed(12345)
+    R <- matrix(0, 4, 4)
+    R[upper.tri(R)] <- runif(6)
+    diag(R) <- 1
+    R <- cov2cor(t(R) \%*\% R)
+    round(R, 4)  # population correlations
+    data <- rmvnorm(1000, rep(0, 4), R)
+    round(cor(data), 4)   # sample correlations
+    x1 <- data[,1]
+    x2 <- data[,2]
+    y1 <- cut(data[,3], c(-Inf, .75, Inf))
+    y2 <- cut(data[,4], c(-Inf, -1, .5, 1.5, Inf))
+    data <- data.frame(x1, x2, y1, y2)
+    hetcor(data)  # Pearson, polychoric, and polyserial correlations, 2-step est.
+    }
+if(require(mvtnorm)){
+    hetcor(x1, x2, y1, y2, ML=TRUE) # Pearson, polychoric, polyserial correlations, ML est.
+    }
 }
 
 \keyword{models}

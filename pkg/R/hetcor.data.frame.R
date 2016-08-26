@@ -1,4 +1,4 @@
-# last modified 2013-12-29 by J. Fox
+# last modified 2016-08-26 by J. Fox
 
 "hetcor.data.frame" <-
     function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.obs"),
@@ -82,10 +82,10 @@
             }
         }
         if (pd && !any(is.na(R)) && min(eigen(R, only.values=TRUE)$values) < 0){
-            cor <- nearcor(R)
+            cor <- Matrix::nearPD(R, corr=TRUE)
             if (!cor$converged) warning("attempt to make correlation matrix positive-definite failed")
-            warning("the correlation matrix has been adjusted to make it positive-definite")
-            R <- cor$cor
+            else warning("the correlation matrix has been adjusted to make it positive-definite")
+            R <- as.matrix(cor$mat)
         }
         rownames(R) <- colnames(R) <- names(data)
         result <- list(correlations=R, type=Type, NA.method=use, ML=ML)
