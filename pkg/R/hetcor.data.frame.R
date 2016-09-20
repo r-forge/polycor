@@ -1,4 +1,4 @@
-# last modified 2016-08-26 by J. Fox
+# last modified 2016-09-20 by J. Fox
 
 "hetcor.data.frame" <-
     function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.obs"),
@@ -9,7 +9,7 @@
             sqrt(v)
         }
         use <- match.arg(use)
-        if (class(data) != "data.frame") stop("argument must be a data frame.")
+#        if (class(data) != "data.frame") stop("argument must be a data frame.")
         if (use == "complete.obs") data <- na.omit(data)
         p <- length(data)
         if (p < 2) stop("fewer than 2 variables.")
