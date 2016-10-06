@@ -1,4 +1,4 @@
-# last modified 2016-09-20 by J. Fox
+# last modified 2016-10-05 by J. Fox
 
 "hetcor.data.frame" <-
     function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.obs"),
@@ -9,7 +9,6 @@
             sqrt(v)
         }
         use <- match.arg(use)
-#        if (class(data) != "data.frame") stop("argument must be a data frame.")
         if (use == "complete.obs") data <- na.omit(data)
         p <- length(data)
         if (p < 2) stop("fewer than 2 variables.")
@@ -24,12 +23,17 @@
             for (j in 1:(i-1)){
                 x <- data[[i]]
                 y <- data[[j]]
+                n <- sum(complete.cases(x, y))
+                if (n == 0) {
+                    R[i, j] <- R[j, i] <- SE[i, j] <- SE[j, i] <- NA
+                    N[i, j] <- N[j, i] <- 0
+                    next
+                }
                 if (inherits(x, c("numeric", "integer")) && inherits(y, c("numeric", "integer"))) {
                     r <- cor(x, y, use="complete.obs")
                     Type[i, j] <- Type[j, i] <- "Pearson"
                     R[i, j] <- R[j, i] <- r
                     if (std.err) {
-                        n <- sum(complete.cases(x, y))
                         SE[i, j] <- SE[j, i] <- se.r(r, n)
                         N[i, j] <- N[j, i] <- n
                         Test[i, j] <- pchisq(chisq(x, y, r, bins=bins), bins^2 - 2, lower.tail=FALSE)
@@ -45,7 +49,6 @@
                         result <- NA
                     }
                     if (std.err && !error){
-                        n <- sum(complete.cases(x, y))
                         R[i, j] <- R[j, i] <- result$rho
                         SE[i, j] <- SE[j, i] <- sqrt(result$var[1,1])
                         N[i, j] <- N[j, i] <- n
@@ -71,7 +74,6 @@
                         result <- NA
                     }
                     if (std.err && !error){
-                        n <- sum(complete.cases(x, y))
                         R[i, j] <- R[j, i] <- result$rho
                         SE[i, j] <- SE[j, i] <- sqrt(result$var[1,1])
                         N[i, j] <- N[j, i] <- n

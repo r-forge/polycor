@@ -13,10 +13,12 @@
 }
 
 \usage{
-hetcor(data, ..., ML = FALSE, std.err = TRUE, bins=4, pd=TRUE)
+hetcor(data, ..., ML = FALSE, std.err = TRUE, 
+  use=c("complete.obs", "pairwise.complete.obs"), bins=4, pd=TRUE)
 \method{hetcor}{data.frame}(data, ML = FALSE, std.err = TRUE, 
   use = c("complete.obs", "pairwise.complete.obs"), bins=4, pd=TRUE, ...)
-\method{hetcor}{default}(data, ..., ML = FALSE, std.err = TRUE, bins=4, pd=TRUE)
+\method{hetcor}{default}(data, ..., ML = FALSE, std.err = TRUE, 
+  use=c("complete.obs", "pairwise.complete.obs"), bins=4, pd=TRUE)
 \method{print}{hetcor}(x, digits = max(3, getOption("digits") - 3), ...)
 \method{as.matrix}{hetcor}(x, ...)
 }
