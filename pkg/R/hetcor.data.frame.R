@@ -19,14 +19,16 @@
         Test <- matrix(0, p, p)
         diag(N) <- if (use == "complete.obs") nrow(data)
         else sapply(data, function(x) sum(!is.na(x)))
+        if (all(diag(N) == 0)) stop("no non-missing cases")
         for (i in 2:p) {
             for (j in 1:(i-1)){
                 x <- data[[i]]
                 y <- data[[j]]
                 n <- sum(complete.cases(x, y))
                 if (n == 0) {
-                    R[i, j] <- R[j, i] <- SE[i, j] <- SE[j, i] <- NA
+                    Test[i, j] <- Test[j, i] <- R[i, j] <- R[j, i] <- SE[i, j] <- SE[j, i] <- NA
                     N[i, j] <- N[j, i] <- 0
+                    warning("no cases for pair ", j, ", ", i)
                     next
                 }
                 if (inherits(x, c("numeric", "integer")) && inherits(y, c("numeric", "integer"))) {
