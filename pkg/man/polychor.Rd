@@ -16,7 +16,9 @@ polychor(x, y, ML = FALSE, control = list(), std.err = FALSE, maxcor=.9999)
 
 \arguments{
   \item{x}{a contingency table of counts or an ordered categorical variable; the latter can be numeric, logical, a factor,
-    or an ordered factor, but if a factor, its levels should be in proper order.}
+    an ordered factor, or a character variable, but if a factor, its levels 
+    should be in proper order, and the values of a character variable are
+    ordered alphabetically.}
   \item{y}{if \code{x} is a variable, a second ordered categorical variable.}
   \item{ML}{if \code{TRUE}, compute the maximum-likelihood estimate; if \code{FALSE}, the default, compute a quicker
     ``two-step'' approximation.}

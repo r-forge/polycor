@@ -18,7 +18,9 @@ polyserial(x, y, ML = FALSE, control = list(), std.err = FALSE, maxcor=.9999, bi
 \arguments{
   \item{x}{a numerical variable.}
   \item{y}{an ordered categorical variable; can be numeric, logical, a factor,
-    or an ordered factor, but if a factor, its levels should be in proper order.}
+   an ordered factor, or a character variables,
+   but if a factor, its levels should be in proper order, and the values of a
+   character variable are ordered alphabetically.}
   \item{ML}{if \code{TRUE}, compute the maximum-likelihood estimate; if \code{FALSE}, the default, compute a quicker
     ``two-step'' approximation.}
   \item{control}{optional arguments to be passed to the \code{optim} function.}

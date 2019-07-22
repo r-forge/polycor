@@ -4,6 +4,8 @@ o Let hetcor() work with objects that inherit from "data.frame" (suggestion of E
 
 o Allow empty pairs when use="pairwise.complete.obs" for hetcor() (suggestion of Emil O. W. Kirkegaard).
 
+o Allow character variables in hetcor() but print message.
+
 version 0.7-9
 
 o  Further protection/warnings against inadmissible correlations.

@@ -25,7 +25,7 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE,
 
 \arguments{
   \item{data}{a data frame consisting of factors, ordered factors, logical variables, 
-  	and/or numeric variables, or the first of several variables.}
+  	character variables, and/or numeric variables, or the first of several variables.}
   \item{\dots}{variables and/or arguments to be passed down.}
   \item{ML}{if \code{TRUE}, compute maximum-likelihood estimates;
     if \code{FALSE}, compute quick two-step estimates.}
@@ -58,6 +58,12 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE,
 
 \note{Although the function reports standard errors for product-moment correlations, transformations (the most well known
   is Fisher's \emph{z}-transformation) are available that make the approach to asymptotic normality much more rapid.}
+  
+\section{Warning}{
+  Be careful with character variables (as opposed to factors), the values of which are
+  ordered alphabetically. Thus, e.g., the values \code{"disagree"}, \code{"neutral"}, 
+  \code{"agree"} are ordered \code{"agree"}, \code{"disagree"}, \code{"neutral"}.
+}
 
 \references{
     Drasgow, F. (1986) 
