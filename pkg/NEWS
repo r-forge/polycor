@@ -1,3 +1,7 @@
+version 0.8-0
+
+o hetcor() can optionally use parallel computations (suggestion of Marc Segond).
+
 version 0.7-10
 
 o Let hetcor() work with objects that inherit from "data.frame" (suggestion of Emil O. W. Kirkegaard).

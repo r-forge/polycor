@@ -14,11 +14,14 @@
 
 \usage{
 hetcor(data, ..., ML = FALSE, std.err = TRUE, 
-  use=c("complete.obs", "pairwise.complete.obs"), bins=4, pd=TRUE)
+  use=c("complete.obs", "pairwise.complete.obs"), 
+  bins=4, pd=TRUE, ncores=1)
 \method{hetcor}{data.frame}(data, ML = FALSE, std.err = TRUE, 
-  use = c("complete.obs", "pairwise.complete.obs"), bins=4, pd=TRUE, ...)
+  use = c("complete.obs", "pairwise.complete.obs"), 
+  bins=4, pd=TRUE, ncores=1, ...)
 \method{hetcor}{default}(data, ..., ML = FALSE, std.err = TRUE, 
-  use=c("complete.obs", "pairwise.complete.obs"), bins=4, pd=TRUE)
+  use=c("complete.obs", "pairwise.complete.obs"), 
+  bins=4, pd=TRUE, ncores=1)
 \method{print}{hetcor}(x, digits = max(3, getOption("digits") - 3), ...)
 \method{as.matrix}{hetcor}(x, ...)
 }
@@ -35,6 +38,7 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE,
     an attempt will be made to adjust it to a
     positive-definite matrix, using the \code{\link[Matrix]{nearPD}} function in the \code{Matrix} package.
     Note that default arguments to \code{nearPD} are used (except \code{corr=TRUE}); for more control call \code{nearPD} directly.}
+  \item{ncores}{if \code{ncores} > 1 (the default is 1), then the computations are done in parallel using the specified number of cores.}
   \item{use}{if \code{"complete.obs"}, remove observations with any missing data; 
     if \code{"pairwise.complete.obs"}, compute each correlation using all observations with
     valid data for that pair of variables.}
