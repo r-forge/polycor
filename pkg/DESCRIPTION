@@ -1,6 +1,6 @@
 Package: polycor
 Version: 0.8-0
-Date: 2020-04-19
+Date: 2020-04-20
 Title: Polychoric and Polyserial Correlations
 Authors@R: person("John", "Fox", role = c("aut", "cre"), email = "jfox@mcmaster.ca")
 Depends: R (>= 3.3.0)

@@ -4,26 +4,30 @@
 \alias{hetcor.data.frame}
 \alias{print.hetcor}
 \alias{as.matrix.hetcor}
+\alias{detectCores}
 
 \title{Heterogeneous Correlation Matrix}
 \description{
-  Computes a heterogenous correlation matrix, consisting of Pearson product-moment
+  \code{hetcor} computes a heterogenous correlation matrix, consisting of Pearson product-moment
   correlations between numeric variables, polyserial correlations between numeric 
   and ordinal variables, and polychoric correlations between ordinal variables.
+  
+  The \code{\link[parallel]{detectCores}} function is imported from the \pkg{parallel} package and re-exported.
 }
 
 \usage{
 hetcor(data, ..., ML = FALSE, std.err = TRUE, 
   use=c("complete.obs", "pairwise.complete.obs"), 
-  bins=4, pd=TRUE, ncores=1)
+  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE))
 \method{hetcor}{data.frame}(data, ML = FALSE, std.err = TRUE, 
   use = c("complete.obs", "pairwise.complete.obs"), 
-  bins=4, pd=TRUE, ncores=1, ...)
+  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE), ...)
 \method{hetcor}{default}(data, ..., ML = FALSE, std.err = TRUE, 
   use=c("complete.obs", "pairwise.complete.obs"), 
-  bins=4, pd=TRUE, ncores=1)
+  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE))
 \method{print}{hetcor}(x, digits = max(3, getOption("digits") - 3), ...)
 \method{as.matrix}{hetcor}(x, ...)
+detectCores(all.tests=FALSE, logical=TRUE) 
 }
 
 \arguments{
@@ -38,16 +42,19 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE,
     an attempt will be made to adjust it to a
     positive-definite matrix, using the \code{\link[Matrix]{nearPD}} function in the \code{Matrix} package.
     Note that default arguments to \code{nearPD} are used (except \code{corr=TRUE}); for more control call \code{nearPD} directly.}
-  \item{ncores}{if \code{ncores} > 1 (the default is 1), then the computations are done in parallel using the specified number of cores.}
+  \item{parallel}{if \code{TRUE} (the default is \code{FALSE}), perform parallel computations on a computer with multiple CPUs/cores.}
+  \item{ncores}{the number of cores to use for parallel computations; the default is the number of physical cores detected.}
   \item{use}{if \code{"complete.obs"}, remove observations with any missing data; 
     if \code{"pairwise.complete.obs"}, compute each correlation using all observations with
     valid data for that pair of variables.}
   \item{x}{an object of class \code{"hetcor"} to be printed, or from which to extract the correlation matrix.}
   \item{digits}{number of significant digits.}
+  \item{all.tests}{logical, apply all known tests; default is \code{FALSE}.}
+  \item{logical}{if \code{TRUE}, detect logical CPUs/cores; if \code{FALSE}, detect physical CPUs/cores.}
 }
 
 \value{
-  Returns an object of class \code{"hetcor"} with the following components:
+  \code{hetcor} eturns an object of class \code{"hetcor"} with the following components:
   \item{correlations}{the correlation matrix.}
   \item{type}{the type of each correlation: \code{"Pearson"}, \code{"Polychoric"}, or \code{"Polyserial"}.}
   \item{std.errors}{the standard errors of the correlations, if requested.}
@@ -93,7 +100,8 @@ hetcor(data, ..., ML = FALSE, std.err = TRUE,
     \emph{Annals of Mathematical Statistics} \bold{29}, 201-211.
 }
 
-\seealso{\code{\link{polychor}}, \code{\link{polyserial}}, \code{\link[Matrix]{nearPD}}}
+\seealso{\code{\link{polychor}}, \code{\link{polyserial}}, \code{\link[Matrix]{nearPD}},
+\code{\link[parallel]{detectCores}}}
 
 \examples{
 if(require(mvtnorm)){

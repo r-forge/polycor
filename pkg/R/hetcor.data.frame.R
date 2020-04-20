@@ -1,7 +1,7 @@
 # # last modified 2020-04-19 by J. Fox
 
 hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.obs"),
-             bins=4, pd=TRUE, ncores=1, ...){
+             bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE), ...){
 
         se.r <- function(r, n){
             rho <- r*(1 + (1 - r^2)/(2*(n - 3))) # approx. unbiased estimator
@@ -106,7 +106,7 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
         cols <- t(rows)
         rows <- rows[lower.tri(rows)]
         cols <- cols[lower.tri(cols)]
-        result <- if (ncores > 1){
+        result <- if (parallel && ncores > 1){
             message("Note: using a cluster of ", ncores, " cores")
             cl <- parallel::makeCluster(ncores)
             on.exit(parallel::stopCluster(cl))
