@@ -1,7 +1,6 @@
-# last modified 2013-12-25 by J. Fox
+# last modified 2020-04-22 by J. Fox
 
-polychor <-
-    function (x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999){
+polychor <- function (x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999, start){
         f <- function(pars) {
             if (length(pars) == 1){
                 rho <- pars
@@ -43,9 +42,28 @@ polychor <-
         n <- sum(tab)
         rc <- qnorm(cumsum(rowSums(tab))/n)[-r]
         cc <- qnorm(cumsum(colSums(tab))/n)[-c]
+        
+        if (!missing(start) && (ML || std.err)) {
+            if (is.list(start)){
+                rho <- start$rho
+                rc <- start$row.thresholds
+                cc <- start$col.thresholds
+            } else {
+                rho <- start
+            }
+            if (!is.numeric(rho) || length(rho) != 1)
+                stop("start value for rho must be a number")
+            if (!is.numeric(rc) || length(rc) != r - 1) 
+                stop("start values for row thresholds must be ", r - 1, "numbers")
+            if (!is.numeric(cc) || length(cc) != c - 1) 
+                stop("start values for column thresholds must be ", c - 1, "numbers")
+        }
+        
         if (ML) {
-            result <- optim(c(optimise(f, interval=c(-1, 1))$minimum, rc, cc), f,
-                            control=control, hessian=std.err)
+            result <- optim(
+                c(if (missing(start)) optimise(f, interval=c(-1, 1))$minimum else rho, rc, cc), 
+                f, control=control, hessian=std.err
+            )
             if (result$par[1] > 1){
                 result$par[1] <- maxcor
                 warning(paste("inadmissible correlation set to", maxcor))
@@ -72,7 +90,8 @@ polychor <-
             else return(as.vector(result$par[1]))
         }
         else if (std.err){
-            result <- optim(0, f, control=control, hessian=TRUE, method="BFGS")
+            result <- optim(if (missing(start)) 0 else rho, 
+                            f, control=control, hessian=TRUE, method="BFGS")
             if (result$par > 1){
                 result$par <- maxcor
                 warning(paste("inadmissible correlation set to", maxcor))

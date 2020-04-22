@@ -1,7 +1,6 @@
-# last modified 2013-12-25 by J. Fox
+# last modified 2020-04-22 by J. Fox
 
-polyserial <-
-	function(x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999, bins=4){
+polyserial <- function(x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999, bins=4, start){
 	f <- function(pars){
 		rho <- pars[1]
 		if (abs(rho) > maxcor) rho <- sign(rho)*maxcor
@@ -32,6 +31,18 @@ polyserial <-
 	cuts <- qnorm(cumsum(tab)/n)[-s]
 	y <- as.numeric(as.factor(y))
 	rho <- sqrt((n - 1)/n)*sd(y)*cor(x, y)/sum(dnorm(cuts))
+	if (!missing(start) && (ML || std.err)) {
+	  if (is.list(start)){
+	    rho <- start$rho
+	    cuts <- start$thresholds
+	  } else {
+	    rho <- start
+	  }
+	  if (!is.numeric(rho) || length(rho) != 1)
+	    stop("start value for rho must be a number")
+	  if (!is.numeric(cuts) || length(cuts) != s - 1) 
+	    stop("start values for thresholds must be ", s - 1, "numbers")
+	}
   if (abs(rho) > maxcor) {
     warning("initial correlation inadmissible, ", rho, ", set to ", sign(rho)*maxcor)
     rho <- sign(rho)*maxcor

@@ -12,7 +12,8 @@
   estimator the estimates of the thresholds and the covariance matrix of the estimates are also available.
 }
 \usage{
-polyserial(x, y, ML = FALSE, control = list(), std.err = FALSE, maxcor=.9999, bins=4)
+polyserial(x, y, ML = FALSE, control = list(), 
+  std.err = FALSE, maxcor=.9999, bins=4, start)
 }
 
 \arguments{
@@ -29,6 +30,7 @@ polyserial(x, y, ML = FALSE, control = list(), std.err = FALSE, maxcor=.9999, bi
     the default is \code{FALSE}.}
   \item{maxcor}{maximum absolute correlation (to insure numerical stability).}
   \item{bins}{the number of bins into which to dissect \code{x} for a test of bivariate normality; the default is 4.}
+    \item{start}{optional start value(s): if a single number, start value for the correlation; if a list with the elements \code{rho} and \code{thresholds}, start values for these parameters; start values are supplied automatically if omitted, and are only relevant when the ML estimator or standard errors are selected.}
 }
 
 \value{

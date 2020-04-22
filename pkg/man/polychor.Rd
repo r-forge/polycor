@@ -11,7 +11,8 @@
 }
 
 \usage{
-polychor(x, y, ML = FALSE, control = list(), std.err = FALSE, maxcor=.9999)
+polychor(x, y, ML = FALSE, control = list(), 
+  std.err = FALSE, maxcor=.9999, start)
 }
 
 \arguments{
@@ -26,7 +27,7 @@ polychor(x, y, ML = FALSE, control = list(), std.err = FALSE, maxcor=.9999)
   \item{std.err}{if \code{TRUE}, return the estimated variance of the correlation (for the two-step estimator) 
     or the estimated covariance matrix (for the ML estimator) of the correlation and thresholds; the default is \code{FALSE}.}
   \item{maxcor}{maximum absolute correlation (to insure numerical stability).}
-}
+    \item{start}{optional start value(s): if a single number, start value for the correlation; if a list with the elements \code{rho}, \code{row.thresholds}, and \code{column.thresholds}, start values for these parameters; start values are supplied automatically if omitted, and are only relevant when the ML estimator or standard errors are selected.}}
 
 \value{
   If \code{std.err} is \code{TRUE}, 
