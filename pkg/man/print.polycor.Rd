@@ -38,7 +38,8 @@ if(require(mvtnorm)){
 if(require(mvtnorm)){
     x <- cut(x, c(-Inf, .75, Inf))
     y <- cut(y, c(-Inf, -1, .5, 1.5, Inf))
-    polychor(x, y, ML=TRUE, std.err=TRUE)  # polychoric correlation, ML estimate
+    print(polychor(x, y, ML=TRUE, std.err=TRUE), 
+      digits=3)  # polychoric correlation, ML estimate
     }
 }
 

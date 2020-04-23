@@ -5,7 +5,7 @@
 
 \description{
   Computes the polyserial correlation (and its standard error)
-  between a quantitative variable and an ordinal variables, based on the assumption
+  between a quantitative variable and an ordinal variable, based on the assumption
   that the joint distribution of the quantitative variable and a latent continuous variable underlying the ordinal 
   variable is bivariate normal. Either
   the maximum-likelihood estimator or a quicker ``two-step'' approximation is available. For the ML
@@ -39,7 +39,7 @@ polyserial(x, y, ML = FALSE, control = list(),
   \item{type}{set to \code{"polyserial"}.}
   \item{rho}{the polyserial correlation.}
   \item{cuts}{estimated thresholds for the ordinal variable (\code{y}), for the ML estimator.}
-  \item{var}{the estimated variance of the correlation, or, for the ML estimator, \
+  \item{var}{the estimated variance of the correlation, or, for the ML estimator, 
     the estimated covariance matrix of the correlation and thresholds.}
   \item{n}{the number of observations on which the correlation is based.}
   \item{chisq}{chi-square test for bivariate normality.}

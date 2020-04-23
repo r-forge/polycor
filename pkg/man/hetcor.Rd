@@ -54,7 +54,7 @@ detectCores(all.tests=FALSE, logical=TRUE)
 }
 
 \value{
-  \code{hetcor} eturns an object of class \code{"hetcor"} with the following components:
+  \code{hetcor} returns an object of class \code{"hetcor"} with the following components:
   \item{correlations}{the correlation matrix.}
   \item{type}{the type of each correlation: \code{"Pearson"}, \code{"Polychoric"}, or \code{"Polyserial"}.}
   \item{std.errors}{the standard errors of the correlations, if requested.}
