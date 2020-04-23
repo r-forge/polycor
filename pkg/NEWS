@@ -20,7 +20,7 @@ o  Protect against out-of-order thresholds during optimization (suggestion of Ev
 
 o  hetcor() doesn't die when an error is thrown computing a correlation, which is now set to NA.
 
-o  hetcor() now uses Matrix::nearPD() to force a postitive-definite results rather than the depricated sfsmisc::nearcor() (suggestion of Timothy Bates).
+o  hetcor() now uses Matrix::nearPD() to force a postitive-definite result rather than the deprecated sfsmisc::nearcor() (suggestion of Timothy Bates).
 
 o  Improved clarity of documentation.
 
