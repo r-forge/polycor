@@ -1,4 +1,4 @@
-# # last modified 2020-04-19 by J. Fox
+# # last modified 2021-11-30 by J. Fox
 
 hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.obs"),
              bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE), ...){
@@ -40,7 +40,7 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
                             "\n    Message: ", result, "\n")
                     result <- NA
                 }
-                if (std.err && !error){
+                if (std.err && !error && !(length(result) == 1 && is.na(result))){
                     r <- result$rho
                     se <- sqrt(result$var[1,1])
                     test <- if (result$df > 0)
@@ -69,7 +69,7 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
                             "\n    Message: ", result, "\n")
                     result <- NA
                 }
-                if (std.err && !error){
+                if (std.err && !error && !(length(result) == 1 && is.na(result))){
                     r <- result$rho
                     se <- sqrt(result$var[1,1])
                     test <- pchisq(result$chisq, result$df, lower.tail=FALSE)
@@ -139,6 +139,10 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
             result$std.errors <- SE
             result$n <- if (use == "complete.obs") n else N
             result$tests <- Test
+        }
+        if (0 < (nNA <- sum(is.na(R[lower.tri(R)])))){
+            warning(nNA, if (nNA == 1) " correlation" else " correlations", 
+                    " couldn't be computed and", if (nNA == 1) " is" else " are", " NA")
         }
         class(result) <- "hetcor"
         result
