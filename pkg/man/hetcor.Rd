@@ -125,6 +125,15 @@ if(require(mvtnorm)){
 if(require(mvtnorm)){
     hetcor(x1, x2, y1, y2, ML=TRUE) # Pearson, polychoric, polyserial correlations, ML est.
     }
+
+\dontrun{
+    hc <- hetcor(data, ML=TRUE)
+      # parallel computation:
+    hc.m <- hetcor(data, ML=TRUE, parallel=TRUE,
+                   ncores=min(2, detectCores()))
+    hc.m
+    all.equal(hc, hc.m)
+    }
 }
 
 \keyword{models}
