@@ -7,8 +7,8 @@
 \title{Standard Methods for polycor Objects}
 
 \description{
-Some standards method for objects of class \code{polycor}, produced by
-\code{\link{polychor}} and \code{\link{polyserial}}.
+Some standard methods for objects of class \code{polycor}, produced by
+\code{\link{polychor}} and \code{\link{polyserial}}, including \code{\link{print}}, \code{\link{summary}}, \code{\link{coef}}, and \code{\link{vcov}}. The \code{summary} method simply invokes the \code{print} method.
 }
 
 \usage{
