@@ -1,6 +1,7 @@
-# last modified 2020-04-22 by J. Fox
+# last modified 2021-12-07 by J. Fox
 
-polychor <- function (x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999, start){
+polychor <- function (x, y, ML=FALSE, control=list(), std.err=FALSE, 
+                      maxcor=.9999, start, thresholds=FALSE){
         f <- function(pars) {
             if (length(pars) == 1){
                 rho <- pars
@@ -104,6 +105,8 @@ polychor <- function (x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.999
             df <- length(tab) - r - c 
             result <- list(type="polychoric",
                            rho=result$par,
+                           row.cuts=rc,
+                           col.cuts=cc,
                            var=1/result$hessian,
                            n=n,
                            chisq=chisq,
@@ -111,6 +114,24 @@ polychor <- function (x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.999
                            ML=FALSE)
             class(result) <- "polycor"
             return(result)
+        } else {
+                rho <- optimise(f, interval=c(-maxcor, maxcor))$minimum
+                if (thresholds){
+                        result <- list(type="polychoric",
+                                       rho=rho,
+                                       row.cuts=rc,
+                                       col.cuts=cc,
+                                       var=NA,
+                                       n=n,
+                                       chisq=NA,
+                                       df=NA,
+                                       ML=FALSE)
+                        class(result) <- "polycor"
+                        return(result) 
+                } else {
+                        return(rho)
+                }
         }
-        else optimise(f, interval=c(-maxcor, maxcor))$minimum
-    }
+}
+
+polychoric <- polychor

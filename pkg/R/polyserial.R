@@ -1,6 +1,7 @@
-# last modified 2020-04-22 by J. Fox
+# last modified 2021-12-07 by J. Fox
 
-polyserial <- function(x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.9999, bins=4, start){
+polyserial <- function(x, y, ML=FALSE, control=list(), std.err=FALSE, 
+                       maxcor=.9999, bins=4, start, thresholds=FALSE){
 	f <- function(pars){
 		rho <- pars[1]
 		if (abs(rho) > maxcor) rho <- sign(rho)*maxcor
@@ -26,6 +27,11 @@ polyserial <- function(x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.99
 	if (sum(0 != tab) < 2){
 		warning("y has fewer than 2 levels with data")
 		return(NA)
+	}
+	nzeros <- sum(zeros <- 0 == tab)
+	if (nzeros > 0){
+	  warning("the following ", if (nzeros == 1) " level" else " levels", " of y",
+	          if (nzeros == 1) " has" else " have", " no cases: ", names(tab)[zeros])
 	}
 	indices <- 1:n
 	cuts <- qnorm(cumsum(tab)/n)[-s]
@@ -87,6 +93,7 @@ polyserial <- function(x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.99
 		df <- s*bins - s  - 1
 		result <- list(type="polyserial",
 			rho=result$par,
+			cuts=cuts,
 			var=1/result$hessian,
 			n=n,
 			chisq=chisq,
@@ -95,5 +102,17 @@ polyserial <- function(x, y, ML=FALSE, control=list(), std.err=FALSE, maxcor=.99
 		class(result) <- "polycor"
 		return(result)
 	}
+  else if (thresholds){
+    result <- list(type="polyserial",
+                   rho=rho,
+                   cuts=cuts,
+                   var=NA,
+                   n=n,
+                   chisq=NA,
+                   df=NA,
+                   ML=FALSE)
+    class(result) <- "polycor"
+    return(result)
+  }
   else return(rho)
 }

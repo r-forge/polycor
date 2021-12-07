@@ -13,7 +13,7 @@
 }
 \usage{
 polyserial(x, y, ML = FALSE, control = list(), 
-  std.err = FALSE, maxcor=.9999, bins=4, start)
+  std.err = FALSE, maxcor=.9999, bins=4, start, thresholds=FALSE)
 }
 
 \arguments{
@@ -31,10 +31,11 @@ polyserial(x, y, ML = FALSE, control = list(),
   \item{maxcor}{maximum absolute correlation (to insure numerical stability).}
   \item{bins}{the number of bins into which to dissect \code{x} for a test of bivariate normality; the default is 4.}
     \item{start}{optional start value(s): if a single number, start value for the correlation; if a list with the elements \code{rho} and \code{thresholds}, start values for these parameters; start values are supplied automatically if omitted, and are only relevant when the ML estimator or standard errors are selected.}
+    \item{thresholds}{if \code{TRUE} (the default is \code{FALSE}) return estimated thresholds along with the estimated correlation even if standard errors aren't computed.}
 }
 
 \value{
-  If \code{std.err} is \code{TRUE}, 
+  If \code{std.err} or \code{thresholds} is \code{TRUE}, 
   returns an object of class \code{"polycor"} with the following components:
   \item{type}{set to \code{"polyserial"}.}
   \item{rho}{the polyserial correlation.}

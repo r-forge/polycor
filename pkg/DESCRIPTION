@@ -1,8 +1,9 @@
 Package: polycor
-Version: 0.8-0
-Date: 2021-11-30
+Version: 0.8-1
+Date: 2021-12-07
 Title: Polychoric and Polyserial Correlations
-Authors@R: person("John", "Fox", role = c("aut", "cre"), email = "jfox@mcmaster.ca")
+Authors@R: c(person("John", "Fox", role = c("aut", "cre"), email = "jfox@mcmaster.ca"),
+             person("Adrian", "Dusa", role = "ctb"))
 Depends: R (>= 3.3.0)
 Imports: stats, mvtnorm, Matrix, parallel
 ByteCompile: yes

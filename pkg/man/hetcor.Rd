@@ -133,6 +133,10 @@ if(require(mvtnorm)){
                    ncores=min(2, detectCores()))
     hc.m
     all.equal(hc, hc.m)
+    
+      # error handling:
+    data$y1[data$y2 == "(0.5,1.5]"] <- NA
+    hetcor(data)
     }
 }
 

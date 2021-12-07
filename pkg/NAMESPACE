@@ -1,11 +1,11 @@
-# last modified 2020-04-20 by J. Fox
+# last modified 2021-12-01 by J. Fox
 
 importFrom("stats", "complete.cases", "cor", "dnorm", "na.omit",
          "optim", "optimise", "pchisq", "pnorm", "qnorm", "sd")
 
 importFrom("parallel", "detectCores")
 
-export(hetcor, polychor, polyserial)
+export(hetcor, polychor, polychoric, polyserial)
 
 export(detectCores)
 
