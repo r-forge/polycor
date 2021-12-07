@@ -87,6 +87,18 @@ polychor <- function (x, y, ML=FALSE, control=list(), std.err=FALSE,
                                ML=TRUE)
                 class(result) <- "polycor"
                 return(result)
+            } else if (thresholds){
+                    result <- list(type="polychoric",
+                                   rho=result$par[1],
+                                   row.cuts=result$par[2:r],
+                                   col.cuts=result$par[(r+1):(r+c-1)],
+                                   var=NA,
+                                   n=n,
+                                   chisq=NA,
+                                   df=NA,
+                                   ML=TRUE)
+                    class(result) <- "polycor"
+                    return(result)
             }
             else return(as.vector(result$par[1]))
         }

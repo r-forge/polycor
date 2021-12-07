@@ -1,27 +1,32 @@
 \name{print.polycor}
 \alias{print.polycor}
+\alias{summary.polycor}
+\alias{coef.polycor}
+\alias{vcov.polycor}
 
-\title{Print Method for polycor Objects}
+\title{Standard Methods for polycor Objects}
 
 \description{
-\code{print} method for objects of class \code{polycor}, produced by
-\code{polychor} and \code{polyserial}.
+Some standards method for objects of class \code{polycor}, produced by
+\code{\link{polychor}} and \code{\link{polyserial}}.
 }
 
 \usage{
 \method{print}{polycor}(x, digits = max(3, getOption("digits") - 3), ...)
+\method{summary}{polycor}(object, ...)
+\method{coef}{polycor}(object, correlation=TRUE, thresholds=TRUE, ...)
+\method{vcov}{polycor}(object, correlation=TRUE, thresholds=TRUE, ...)
 }
 
 \arguments{
-  \item{x}{an object of class \code{polycor}, as returned by \code{polychor} 
+  \item{x, object}{an object of class \code{polycor}, as returned by \code{polychor} 
     or \code{polyserial}.}
   \item{digits}{number of significant digits to be printed.}
-  \item{\dots}{not used.}
+  \item{correlation}{return the estimated correlation or sampling variance of the correlation.}
+  \item{thresholds}{return the estimated thresholds or sampling variances/covariances of the thresholds.}
+  \item{\dots}{pass arguments from \code{summary} to \code{print}; otherwise not used.}
 }
 
-\value{
-  Invisibly returns \code{x}; used for its side effect --- i.e., printing.
-}
 
 \author{John Fox \email{jfox@mcmaster.ca}}
 
@@ -40,6 +45,12 @@ if(require(mvtnorm)){
     y <- cut(y, c(-Inf, -1, .5, 1.5, Inf))
     print(polychor(x, y, ML=TRUE, std.err=TRUE), 
       digits=3)  # polychoric correlation, ML estimate
+    }
+if(require(mvtnorm)){
+    coef(polychor(x, y, ML=TRUE, std.err=TRUE))
+    }
+if(require(mvtnorm)){
+    vcov(polychor(x, y, ML=TRUE, std.err=TRUE))
     }
 }
 
