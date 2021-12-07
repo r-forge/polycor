@@ -6,6 +6,8 @@ o polychor() and polyserial() can return estimated thresholds even when std.err=
 
 o Introduced polychoric() as a synomym for polychor().
 
+o New methods for standard generics, including summary(), coef(), and vcov().
+
 version 0.8-0
 
 o hetcor() can optionally use parallel computations (suggestion of Marc Segond).
