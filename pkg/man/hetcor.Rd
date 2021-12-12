@@ -18,13 +18,16 @@
 \usage{
 hetcor(data, ..., ML = FALSE, std.err = TRUE, 
   use=c("complete.obs", "pairwise.complete.obs"), 
-  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE))
+  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE),
+  thresholds=FALSE)
 \method{hetcor}{data.frame}(data, ML = FALSE, std.err = TRUE, 
   use = c("complete.obs", "pairwise.complete.obs"), 
-  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE), ...)
+  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE), 
+  thresholds=FALSE, ...)
 \method{hetcor}{default}(data, ..., ML = FALSE, std.err = TRUE, 
   use=c("complete.obs", "pairwise.complete.obs"), 
-  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE))
+  bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE),
+  thresholds=FALSE)
 \method{print}{hetcor}(x, digits = max(3, getOption("digits") - 3), ...)
 \method{as.matrix}{hetcor}(x, ...)
 detectCores(all.tests=FALSE, logical=TRUE) 
@@ -47,6 +50,8 @@ detectCores(all.tests=FALSE, logical=TRUE)
   \item{use}{if \code{"complete.obs"}, remove observations with any missing data; 
     if \code{"pairwise.complete.obs"}, compute each correlation using all observations with
     valid data for that pair of variables.}
+  \item{thresholds}{if \code{TRUE} (the default is \code{FALSE}), include the estimated thresholds
+  for polyserial and polychoric correlation in the returned object.}
   \item{x}{an object of class \code{"hetcor"} to be printed, or from which to extract the correlation matrix.}
   \item{digits}{number of significant digits.}
   \item{all.tests}{logical, apply all known tests; default is \code{FALSE}.}
@@ -63,6 +68,7 @@ detectCores(all.tests=FALSE, logical=TRUE)
   \item{NA.method}{the method by which any missing data were handled: \code{"complete.obs"} 
     or \code{"pairwise.complete.obs"}.}
   \item{ML}{\code{TRUE} for ML estimates, \code{FALSE} for two-step estimates.}
+  \item{thresholds}{optionally, according to the \code{thresholds} argument, a matrix of mode list with a list of thresholds for each polyserial and polychoric correlation in the elements below the diagonal and the type of each correlation (Pearson, polyserial, or polychoric) above the diagonal.}
 }
 
 \author{John Fox \email{jfox@mcmaster.ca}}
