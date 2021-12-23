@@ -1,32 +1,35 @@
-# # last modified 2021-12-11 by J. Fox
+# last modified 2021-12-23 by J. Fox
 
-# the following function is adapted with permission from admisc::tryCatchWEM()  by Adrian Dusa
+# the following function to be imported from admisc and then deleted here:
 
-tryCatchWEM <- function (expr, capture = TRUE) {
-    # modified version of http://stackoverflow.com/questions/4948361/how-do-i-save-warnings-and-errors-as-output-from-a-function"
+`tryCatchWEM` <- function(expr, capture = FALSE) {
     toreturn <- list()
+    
     output <- withVisible(withCallingHandlers(
-        tryCatch(expr, 
-                 error = function(e) {
-                     toreturn$error <<- e$message
-                     NULL
-                 }), warning = function(w) {
-                     toreturn$warning <<- c(toreturn$warning, w$message)
-                     invokeRestart("muffleWarning")
-                 }, message = function(m) {
-                     toreturn$message <<- paste(toreturn$message, m$message, 
-                                                sep = "")
-                     invokeRestart("muffleMessage")
-                 }))
-    if (capture & output$visible) {
-        if (!is.null(output$value)) {
-            toreturn$result <- output$value
+        tryCatch(expr, error = function(e) {
+            toreturn$error <<- e$message
+            NULL
+        }),
+        warning = function(w) {
+            toreturn$warning <<- c(toreturn$warning, w$message)
+            invokeRestart("muffleWarning")
+        },
+        message = function(m) {
+            toreturn$message <<- paste(toreturn$message, m$message, sep = "")
+            invokeRestart("muffleMessage")
         }
+    ))
+    
+    if (capture && output$visible && !is.null(output$value)) {
+        toreturn$output <- capture.output(output$value)
+        toreturn$value <- output$value
     }
+    
     if (length(toreturn) > 0) {
         return(toreturn)
     }
 }
+
 
 hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.obs"),
                               bins=4, pd=TRUE, parallel=FALSE, ncores=detectCores(logical=FALSE), 
@@ -63,7 +66,8 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
         else if (inherits(x, c("factor", "logical", "character")) && 
                  inherits(y, c("factor", "logical", "character"))) {
             type <- "Polychoric"
-            result <- tryCatchWEM(polychor(x, y, ML=ML, std.err=std.err, thresholds=thresholds))
+            result <- tryCatchWEM(polychor(x, y, ML=ML, std.err=std.err, thresholds=thresholds),
+                                  capture=TRUE)
             error <- !is.null(result$error)
             if (!is.null(result$warning)){
                 warning("polychoric correlation between variables ", vnames[j], " and ", vnames[i],
@@ -77,7 +81,7 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
                 result <- NA
             }
             if (std.err && !error){
-                result <- result$result
+                result <- result$value
                 if (!(length(result) == 1 && is.na(result))){
                     r <- result$rho
                     se <- sqrt(result$var[1,1])
@@ -91,7 +95,7 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
                 }
             }
             else {
-                r <- result$result
+                r <- result$value
                 test <- se <- NA
             }
             Thresholds <- if (thresholds) {
@@ -105,10 +109,12 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
             if (inherits(x, c("factor", "logical", "character")) && 
                 inherits(y, c("numeric", "integer")))
                 result <- tryCatchWEM(polyserial(y, x, ML=ML, std.err=std.err, bins=bins, 
-                                                 thresholds=thresholds))
+                                                 thresholds=thresholds),
+                                      capture=TRUE)
             else if (inherits(x, c("numeric", "integer")) && 
                      inherits(y, c("factor", "logical", "character")))
-                result <- tryCatchWEM(polyserial(x, y, ML=ML, std.err=std.err, bins=bins))
+                result <- tryCatchWEM(polyserial(x, y, ML=ML, std.err=std.err, bins=bins),
+                                      capture=TRUE)
             else {
                 stop("columns must be numeric, factors, logical, or character.")
             }
@@ -126,7 +132,7 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
                 result <- NA
             }
             if (std.err && !error){
-                result <- result$result
+                result <- result$value
                 if (!(length(result) == 1 && is.na(result))){
                     r <- result$rho
                     se <- sqrt(result$var[1,1])
