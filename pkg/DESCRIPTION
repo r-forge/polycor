@@ -5,7 +5,7 @@ Title: Polychoric and Polyserial Correlations
 Authors@R: c(person("John", "Fox", role = c("aut", "cre"), email = "jfox@mcmaster.ca"),
              person("Adrian", "Dusa", role = "ctb"))
 Depends: R (>= 3.3.0)
-Imports: stats, mvtnorm, Matrix, parallel, admisc
+Imports: stats, mvtnorm, Matrix, parallel, admisc (>= 0.22)
 ByteCompile: yes
 LazyLoad: yes
 Description: Computes polychoric and polyserial correlations by quick "two-step" methods or ML, 
