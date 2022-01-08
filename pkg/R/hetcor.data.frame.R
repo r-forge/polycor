@@ -1,34 +1,34 @@
-# last modified 2021-12-23 by J. Fox
+# last modified 2022-01-08 by J. Fox
 
 # the following function to be imported from admisc and then deleted here:
 
-`tryCatchWEM` <- function(expr, capture = FALSE) {
-    toreturn <- list()
-    
-    output <- withVisible(withCallingHandlers(
-        tryCatch(expr, error = function(e) {
-            toreturn$error <<- e$message
-            NULL
-        }),
-        warning = function(w) {
-            toreturn$warning <<- c(toreturn$warning, w$message)
-            invokeRestart("muffleWarning")
-        },
-        message = function(m) {
-            toreturn$message <<- paste(toreturn$message, m$message, sep = "")
-            invokeRestart("muffleMessage")
-        }
-    ))
-    
-    if (capture && output$visible && !is.null(output$value)) {
-        toreturn$output <- capture.output(output$value)
-        toreturn$value <- output$value
-    }
-    
-    if (length(toreturn) > 0) {
-        return(toreturn)
-    }
-}
+# `tryCatchWEM` <- function(expr, capture = FALSE) {
+#     toreturn <- list()
+#     
+#     output <- withVisible(withCallingHandlers(
+#         tryCatch(expr, error = function(e) {
+#             toreturn$error <<- e$message
+#             NULL
+#         }),
+#         warning = function(w) {
+#             toreturn$warning <<- c(toreturn$warning, w$message)
+#             invokeRestart("muffleWarning")
+#         },
+#         message = function(m) {
+#             toreturn$message <<- paste(toreturn$message, m$message, sep = "")
+#             invokeRestart("muffleMessage")
+#         }
+#     ))
+#     
+#     if (capture && output$visible && !is.null(output$value)) {
+#         toreturn$output <- capture.output(output$value)
+#         toreturn$value <- output$value
+#     }
+#     
+#     if (length(toreturn) > 0) {
+#         return(toreturn)
+#     }
+# }
 
 
 hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs", "pairwise.complete.obs"),
