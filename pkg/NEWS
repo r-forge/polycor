@@ -1,6 +1,6 @@
 version 0.8-1
 
-o Further enhancements to warnings in hetcor() and error reporting in polyserial(); my thanks to Adrian Dusa for changes to his admisc::tryCatchWEM() facilitating these enhancements.
+o Further enhancements to warnings in hetcor() and error reporting in polyserial(); my thanks to Adrian Dusa for changes to his admisc::tryCatchWEM() facilitating these enhancements. 
 
 o polychor() and polyserial() can return estimated thresholds even when std.err=FALSE, via new thresholds argument; hetcor() has also acquired a thresholds argument (suggestions of Florian Schuberth).
 
