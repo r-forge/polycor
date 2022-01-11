@@ -1,4 +1,4 @@
-# last modified 2022-01-08 by J. Fox
+# last modified 2022-01-10 by J. Fox
 
 # the following function to be imported from admisc and then deleted here:
 
@@ -90,12 +90,12 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
                     else NA
                 }
                 else {
-                    r <- result
+                    r <- if (is.list(result)) result$value else result
                     test <- se <- NA
                 }
             }
             else {
-                r <- result$value
+                r <- if (is.list(result)) result$value else result
                 test <- se <- NA
             }
             Thresholds <- if (thresholds) {
@@ -139,12 +139,12 @@ hetcor.data.frame <- function(data, ML=FALSE, std.err=TRUE, use=c("complete.obs"
                     test <- pchisq(result$chisq, result$df, lower.tail=FALSE)
                 }
                 else {
-                    r <- result
+                    r <- if (is.list(result)) result$value else result
                     test <- se <- NA
                 }
             }
             else {
-                r <- result
+                r <- if (is.list(result)) result$value else result
                 se <- test <- NA
             }
             Thresholds <- if (thresholds) {

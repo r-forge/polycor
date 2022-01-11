@@ -1,6 +1,5 @@
 \name{polychor}
 \alias{polychor}
-\alias{polychoric}
 
 \title{Polychoric Correlation}
 \description{
@@ -9,15 +8,10 @@
   assumption that the ordinal variables dissect continuous latent variables that are bivariate normal. Either
   the maximum-likelihood estimator or a (possibly much) quicker ``two-step'' approximation is available. For the ML
   estimator, the estimates of the thresholds and the covariance matrix of the estimates are also available.
-  
-  \code{polychoric} is a synonym for \code{polychor}.
 }
 
 \usage{
 polychor(x, y, ML = FALSE, control = list(), 
-  std.err = FALSE, maxcor=.9999, start, thresholds=FALSE)
-  
-polychoric(x, y, ML = FALSE, control = list(), 
   std.err = FALSE, maxcor=.9999, start, thresholds=FALSE)
 }
 
@@ -97,7 +91,7 @@ if(require(mvtnorm)){
     polychor(x, y)  # 2-step estimate
     }
 if(require(mvtnorm)){
-    polychoric(x, y, ML=TRUE, std.err=TRUE)  # ML estimate
+    polychor(x, y, ML=TRUE, std.err=TRUE)  # ML estimate
     }
 }
 

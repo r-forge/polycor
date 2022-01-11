@@ -4,8 +4,6 @@ o Further enhancements to warnings in hetcor() and error reporting in polyserial
 
 o polychor() and polyserial() can return estimated thresholds even when std.err=FALSE, via new thresholds argument; hetcor() has also acquired a thresholds argument (suggestions of Florian Schuberth).
 
-o Introduced polychoric() as a synonym for polychor().
-
 o New methods for standard generics, including summary(), coef(), and vcov().
 
 version 0.8-0

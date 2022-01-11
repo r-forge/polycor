@@ -1,4 +1,4 @@
-# last modified 2021-12-07 by J. Fox
+# last modified 2022-01-10 by J. Fox
 
 polychor <- function (x, y, ML=FALSE, control=list(), std.err=FALSE, 
                       maxcor=.9999, start, thresholds=FALSE){
@@ -145,5 +145,3 @@ polychor <- function (x, y, ML=FALSE, control=list(), std.err=FALSE,
                 }
         }
 }
-
-polychoric <- polychor

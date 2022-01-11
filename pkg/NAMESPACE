@@ -1,4 +1,4 @@
-# last modified 2021-12-23 by J. Fox
+# last modified 2022-01-10 by J. Fox
 
 importFrom("stats", "complete.cases", "cor", "dnorm", "na.omit",
          "optim", "optimise", "pchisq", "pnorm", "qnorm", "sd", "coef")
@@ -7,7 +7,7 @@ importFrom("parallel", "detectCores")
 
 importFrom("admisc", "tryCatchWEM")
 
-export(hetcor, polychor, polychoric, polyserial)
+export(hetcor, polychor, polyserial)
 
 export(detectCores)
 
